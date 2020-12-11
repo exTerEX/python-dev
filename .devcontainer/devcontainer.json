@@ -1,0 +1,9 @@
+{
+    "name": "",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "extensions": [
+        "ms-azuretools.vscode-docker"
+    ]
+}
