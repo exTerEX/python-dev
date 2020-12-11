@@ -22,7 +22,7 @@ RUN wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/inst
 
 RUN sudo rm -rf /var/lib/apt/lists/*
 
-ENV PATH="$PATH:/home/vscode/.local/bin"
+ENV PATH="$PATH:/home/${USERNAME}/.local/bin"
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 
 ENV DEBIAN_FRONTEND=dialog
