@@ -16,7 +16,7 @@ Create `.devcontainer/devcontainer.json` to project with the content,
 }
 ```
 
-For configuration of `devcontainer.json` see [code.visualstudio.com](https://code.visualstudio.com/docs/remote/devcontainerjson-reference)
+For configuration of `devcontainer.json` see [code.visualstudio.com](https://code.visualstudio.com/docs/remote/devcontainerjson-reference).
 
 ## Build
 
