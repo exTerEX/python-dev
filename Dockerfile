@@ -1,30 +1,34 @@
-FROM python:latest
+# Copyright 2021 Andreas Sagen
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-ENV DEBIAN_FRONTEND=noninteractive
+FROM exterex/base-dev
 
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ENV LANG C.UTF-8
 
-RUN apt-get update
-RUN apt-get -y install --no-install-recommends \
-    sudo \
-    locales
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+RUN sudo apt update \
+    && sudo apt --assume-yes install --no-install-recommends \
+    python3 \
+    python3-dev \
+    python3-setuptools \
+    python3-pip
 
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+RUN sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1 \
+    && sudo update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1 \
+    && sudo rm -rf /var/lib/apt/lists/*
 
-RUN wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O - | bash || true
+ENV DEBIAN_FRONTEND dialog
 
-RUN sudo rm -rf /var/lib/apt/lists/*
-
-ENV PATH="$PATH:/home/${USERNAME}/.local/bin"
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1
-
-ENV DEBIAN_FRONTEND=dialog
-
-CMD ["python"]
+CMD [ "bash" ]
