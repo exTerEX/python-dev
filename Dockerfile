@@ -21,13 +21,15 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sudo apt update \
     && sudo apt --assume-yes install --no-install-recommends \
     python3 \
+    python3-pip \
     python3-dev \
-    python3-setuptools \
-    python3-pip
+    python3-setuptools
 
-RUN sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3 1 \
-    && sudo update-alternatives --install /usr/local/bin/pip pip /usr/bin/pip3 1 \
-    && sudo rm -rf /var/lib/apt/lists/*
+RUN cd /usr/bin \
+    && sudo ln -s python3 python \
+    && sudo ln -s pip3 pip
+
+RUN sudo rm -rf /var/lib/apt/lists/*
 
 ENV DEBIAN_FRONTEND dialog
 
