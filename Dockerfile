@@ -12,24 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+FROM python:3.9.1-slim AS build
+
 FROM exterex/base-dev
 
 ENV LANG C.UTF-8
 
+RUN sudo apt update; \
+    sudo apt --assume-yes install --no-install-recommends \
+        libexpat1 \
+        zlib1g \
+        libssl1.1 \
+        libbz2-1.0 \
+        libc6 \
+        libcrypt1 \
+        libdb5.3 \
+        libffi7 \
+        liblzma5 \
+        libncursesw6 \
+        libmpdec2 \
+        libreadline8 \
+        libsqlite3-0 \
+        libtinfo6 \
+        libuuid1 \
+        mime-support; \
+    sudo rm -rf /var/lib/apt/lists/*
+
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN sudo apt update \
-    && sudo apt --assume-yes install --no-install-recommends \
-    python3 \
-    python3-pip \
-    python3-dev \
-    python3-setuptools
+COPY --from=build /usr/local /usr/local
 
-RUN cd /usr/bin \
-    && sudo ln -s python3 python \
-    && sudo ln -s pip3 pip
-
-RUN sudo rm -rf /var/lib/apt/lists/*
+RUN sudo ldconfig \
+    && cd /usr/local/bin \
+    && sudo rm -r idle* 2to3* \
+    && python --version
 
 ENV DEBIAN_FRONTEND dialog
 
