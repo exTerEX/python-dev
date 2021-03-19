@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM python:3.9.1-slim AS build
+FROM python:3.9.2-slim AS build
 
 FROM exterex/base-dev
 
