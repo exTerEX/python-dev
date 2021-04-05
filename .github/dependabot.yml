@@ -4,7 +4,4 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    labels:
-      - dependencies
-      - docker
     open-pull-requests-limit: 5
